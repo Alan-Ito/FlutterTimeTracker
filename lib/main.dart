@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mytimetrackerapp/pages/list/view/list.dart';
-import 'package:mytimetrackerapp/pages/list/binding/list_binding.dart';
+import 'package:mytimetrackerapp/pages/list/bindings/list_binding.dart';
 
 void main() {
   runApp(MyApp());

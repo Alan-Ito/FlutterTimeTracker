@@ -4,28 +4,43 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mytimetrackerapp/pages/list/controllers/count_controller.dart';
+import 'package:mytimetrackerapp/pages/list/controllers/list_controller.dart';
 
-import 'controller/list_controller.dart';
 
 class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listController = Get.find<ListController>();
+    final countController = Get.find<CountController>();
     var currentValue = 0;
-    var listAdded = false.obs;
-    var listLength = 0.obs;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          countController.increment();
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.blue,
+      ),
       appBar: AppBar(
         title: Text("Time Tracker"),
       ),
       body: Container(
         child: Column(
           children: [
+            SizedBox(
+              height: 30,
+            child: Container(
+              child: Obx(()=>
+                Text('list要素数 : ${listController.listLength.value} -------floating buttonクリック数 : ${countController.count.value}')
+              ),
+            ),
+            ),
             Expanded(
               child: Obx(() => ListView.builder(
                   padding: const EdgeInsets.all(8),
-                  itemCount: listLength.value,
+                  itemCount: listController.listLength.value,
                   itemBuilder: (BuildContext context, int index) {
                     return SizedBox(
                       height: 50,
@@ -78,9 +93,7 @@ class ListScreen extends StatelessWidget {
                         primary: Colors.black, //ボタンの背景色
                       ),
                       onPressed: () {
-                        listController.addList(currentValue);
-                        listAdded.value = true;
-                        listLength++;
+                        listController.add(currentValue);
                       },
                     ),
                   ),
